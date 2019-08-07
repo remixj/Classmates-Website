@@ -5,6 +5,11 @@ four colors for this website.
   #00adb5
   #eeeeee
  */
+/* .map-property{
+  fill : white;
+  stroke : black;
+} */
+
 .tmp-title-color{
   text-align: center;
   color : #eeeeee;
@@ -15,6 +20,12 @@ four colors for this website.
   text-align: center;
   color : #393e46;
   padding: 20px 20% 20px;
+}
+
+.button-color{
+  background-color: #00adb5;
+  color : #eeeeee;
+
 }
 
 .colored-section {
@@ -50,13 +61,30 @@ four colors for this website.
 }
 
 #map {
-  padding-top: 300px;
-  padding-bottom: 300px;
+  padding-top: 50px;
+  padding-bottom: 50px;
   text-align: center;
 }
 
-#review {
+.map-title{
+  font-size: 4rem;
+  font-weight: bold;
+  padding: 0 20% 0;
+}
+
+.color-input{
+  padding : 20px 22% 20px;
+  font-weight:bold;
+}
+
+path:hover{
+  fill-opacity : 0.4;
+}
+
+#features {
+  color : white;
   padding : 100px 0 100px;
+  text-align: center;
 }
 
 #footer{
