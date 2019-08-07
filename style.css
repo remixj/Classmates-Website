@@ -1,0 +1,66 @@
+/*
+four colors for this website.
+  #222831
+  #393e46
+  #00adb5
+  #eeeeee
+ */
+.tmp-title-color{
+  text-align: center;
+  color : #eeeeee;
+  padding: 20px 20% 20px;
+}
+
+.tmp-title-white{
+  text-align: center;
+  color : #393e46;
+  padding: 20px 20% 20px;
+}
+
+.colored-section {
+  background-color: #222831;
+}
+
+.white-section {
+  background: #eeeeee;
+}
+
+#head {}
+
+.title-nav {
+  color: #eeeeee;
+  font-family: 'Sacramento', bold;
+  font-size: 2rem;
+}
+
+.head-title {
+  color: #eeeeee;
+  padding: 20px 30% 20px;
+  font-size: 4rem;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.head-img {
+  text-align: center;
+}
+
+.col-lg-6 {
+  text-align: center;
+}
+
+#map {
+  padding-top: 300px;
+  padding-bottom: 300px;
+  text-align: center;
+}
+
+#review {
+  padding : 100px 0 100px;
+}
+
+#footer{
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
