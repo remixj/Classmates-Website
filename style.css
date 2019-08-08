@@ -81,6 +81,10 @@ path:hover{
   fill-opacity : 0.4;
 }
 
+.selected{
+  fill-opacity : 0.4;
+}
+
 #features {
   color : white;
   padding : 100px 0 100px;
@@ -91,4 +95,17 @@ path:hover{
   text-align: center;
   padding-top: 20px;
   padding-bottom: 20px;
+}
+
+.footer-p{
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.footer-icon{
+  padding : 1px 10px 0;
+}
+
+.copy-right{
+  margin-bottom: 3px;
 }
