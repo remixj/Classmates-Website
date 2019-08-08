@@ -16,7 +16,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <!-- css file -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/style.css">
   <!-- icon kit fontawesome -->
   <script src="https://kit.fontawesome.com/46b0191f79.js"></script>
 </head>
@@ -40,7 +40,7 @@
               <a class="nav-link" href=""> Download </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href=""> Login </a>
+              <a class="nav-link" href="login.html" id="signin"> Sign in </a>
             </li>
           </ul>
         </div>
@@ -49,10 +49,27 @@
       <!-- title and example -->
       <div class="row">
         <div class="col-lg-6">
-          <h1 class="head-title">Keep in touch with your classmates</h1>
+          <h3 class="head-title">Keep in touch with your classmates</h3>
         </div>
-        <div class="col-lg-6">
-          <img class="head-img" src="img/example_1.png" alt="example-map-1">
+        <div class="col-lg-6" id="signup-div">
+          <div class="jumbotron" id="signup-info">
+              <label id="username">Username</label>
+              <div class="input-group">   
+                  <input type="text" class="form-control" aria-describedby="basic-addon1">            
+              </div>
+              <label id="email">Email</label>
+              <div class="input-group"> 
+                  <input type="text" class="form-control" aria-describedby="basic-addon2">         
+              </div>
+              <label id="password">Password</label>
+              <div class="input-group"> 
+                  <input type="text" class="form-control" aria-describedby="basic-addon3">         
+              </div>
+              <br />
+              <button type="submit" class="btn btn-primary" id="signup">Sign up</button>
+
+          </div>
+          <!-- <img class="head-img" src="img/example_1.png" alt="example-map-1"> -->
         </div>
       </div>
     </section>
@@ -225,7 +242,7 @@
 
 
 
-  <script src="index.js" charset="utf-8"></script>
+  <script src="js/index.js" charset="utf-8"></script>
 </body>
 
 </html>
