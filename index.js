@@ -28,10 +28,8 @@ $("path").click(function(click) {
     svg_y = svg_element.offset().top;
   var mouse_x = click.pageX,
     mouse_y = click.pageY;
-
-  console.log(mouse_x - svg_x,mouse_y - svg_y);
+  // console.log(svg_x,svg_y,mouse_x,mouse_y,mouse_x - svg_x,mouse_y - svg_y);
   create_line(mouse_x - svg_x, mouse_y - svg_y);
-
   var CN_code = click.target.id;
   $("#" + CN_code).toggleClass("selected");
   // update the hash set
@@ -52,19 +50,15 @@ function create_line(starting_x, starting_y) {
     fill: 'red'
   });
   //<path d="m 610,406 40,0" stroke="red" fill="red"></path>
-  var line_code = "m " + starting_x + "," + starting_y + " 10" + "," + "10";
+  var line_code = "m " + starting_x + "," + "starting_y";
   var line = makeSVG('path',{
     d : line_code ,
     fill : "red" ,
-    stroke : "red",
-    "stroke-width" : 3
+    stroke : "red"
   });
-  document.getElementById('china-map').appendChild(line);
-  document.getElementById('china-map').appendChild(circle);
-}
 
-function generate_proper_line_code (starting_x,starting_y){
-
+  circle.appendTo($("china-map"));
+  line.appendTo($("china-map"));
 }
 
 function makeSVG(tag, attrs) {

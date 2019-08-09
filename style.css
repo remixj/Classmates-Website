@@ -1,0 +1,111 @@
+/*
+four colors for this website.
+  #222831
+  #393e46
+  #00adb5
+  #eeeeee
+ */
+/* .map-property{
+  fill : white;
+  stroke : black;
+} */
+
+.tmp-title-color{
+  text-align: center;
+  color : #eeeeee;
+  padding: 20px 20% 20px;
+}
+
+.tmp-title-white{
+  text-align: center;
+  color : #393e46;
+  padding: 20px 20% 20px;
+}
+
+.button-color{
+  background-color: #00adb5;
+  color : #eeeeee;
+
+}
+
+.colored-section {
+  background-color: #222831;
+}
+
+.white-section {
+  background: #eeeeee;
+}
+
+#head {}
+
+.title-nav {
+  color: #eeeeee;
+  font-family: 'Sacramento', bold;
+  font-size: 2rem;
+}
+
+.head-title {
+  color: #eeeeee;
+  padding: 20px 30% 20px;
+  font-size: 4rem;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.head-img {
+  text-align: center;
+}
+
+.col-lg-6 {
+  text-align: center;
+}
+
+#map {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  text-align: center;
+}
+
+.map-title{
+  font-size: 4rem;
+  font-weight: bold;
+  padding: 0 20% 0;
+}
+
+.color-input{
+  padding : 20px 22% 20px;
+  font-weight:bold;
+}
+
+path:hover{
+  fill-opacity : 0.4;
+}
+
+.selected{
+  fill-opacity : 0.4;
+}
+
+#features {
+  color : white;
+  padding : 100px 0 100px;
+  text-align: center;
+}
+
+#footer{
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.footer-p{
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.footer-icon{
+  padding : 1px 10px 0;
+}
+
+.copy-right{
+  margin-bottom: 3px;
+}
