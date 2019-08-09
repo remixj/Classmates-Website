@@ -29,8 +29,9 @@ $("path").click(function(click) {
   var mouse_x = click.pageX,
     mouse_y = click.pageY;
 
-  console.log(mouse_x - svg_x,mouse_y - svg_y);
+  console.log(mouse_x - svg_x, mouse_y - svg_y);
   create_line(mouse_x - svg_x, mouse_y - svg_y);
+  create_circle(mouse_x - svg_x, mouse_y - svg_y);
 
   var CN_code = click.target.id;
   $("#" + CN_code).toggleClass("selected");
@@ -42,7 +43,7 @@ $("path").click(function(click) {
   }
 });
 
-function create_line(starting_x, starting_y) {
+function create_circle(starting_x, starting_y) {
   var circle = makeSVG('circle', {
     cx: Number(starting_x),
     cy: Number(starting_y),
@@ -51,19 +52,22 @@ function create_line(starting_x, starting_y) {
     'stroke-width': 2,
     fill: 'red'
   });
-  //<path d="m 610,406 40,0" stroke="red" fill="red"></path>
-  var line_code = "m " + starting_x + "," + starting_y + " 10" + "," + "10";
-  var line = makeSVG('path',{
-    d : line_code ,
-    fill : "red" ,
-    stroke : "red",
-    "stroke-width" : 3
-  });
-  document.getElementById('china-map').appendChild(line);
   document.getElementById('china-map').appendChild(circle);
 }
 
-function generate_proper_line_code (starting_x,starting_y){
+function create_line(starting_x, starting_y){
+  //<path d="m 610,406 40,0" stroke="red" fill="red"></path>
+  var line_code = "m " + starting_x + "," + starting_y + " 10" + "," + "10";
+  var line = makeSVG('path', {
+    d: line_code,
+    fill: "red",
+    stroke: "red",
+    "stroke-width": 3
+  });
+  document.getElementById('china-map').appendChild(line);
+}
+
+function generate_proper_line_code(starting_x, starting_y) {
 
 }
 
