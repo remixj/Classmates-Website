@@ -112,6 +112,10 @@ four colors for this website.
   position: absolute;
 }
 
+i{
+  padding: 1px 8px 1px 10px;
+}
+
 .circle-base {
     border-radius: 50%;
     height: 6px;
