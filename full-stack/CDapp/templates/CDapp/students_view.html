@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  {% include 'CDapp/components/headers.html' %}
+  <body>
+    <section class="colored-section" id="head">
+      <section class="container-fluid">
+        <!-- Nav Bar -->
+        {% include 'CDapp/components/navbar.html' %}
+      </section>
+    </section>
+
+    <section class="white-section" id="map">
+      {% if user.is_authenticated %}
+        <p>Welcome, {{ user.username }}</p>
+        <form method="POST" action="{% url 'CDapp:user' %}" enctype="multipart/form-data" class="form-vertical">
+          {% csrf_token %}
+          {% if not formed_flag %}
+            <div>
+              <button type="submit" class="btn btn-primary" name="create" value="create new class">Create new class</button>
+              <button type="submit" class="btn btn-primary" name="load" value="load class info">Load class info</button>
+            </div>
+          {% else %}
+            {% if form_type == "load" %}
+              <div>
+                {% include 'CDapp/components/userinfo_input.html' %}
+                <p>Note: Choosing a position by clicking the map below</p> 
+                <button type="submit" class="btn btn-primary" name="data_add">Add</button>
+                <!-- <input type="button" lass="btn btn-primary" value="Complete" οnclick=javascrtpt:jump() /> -->
+              </div>
+            {% else %}
+              {{ form.as_p }}
+              <button type="submit" class="btn btn-primary" name="data_create">Create</button>
+            {% endif %}
+          {% endif %}
+        </form>
+      {% endif %}
+        
+      <div class="map-svg">
+        {% include 'CDapp/svg-html/img-china.html' %}
+      </div>
+    </section>
+
+    <section class="colored-section" id="features">
+      <div class="row feature-box">
+        <div class='col-lg-4 feature-cell'>
+          <i class="fas fa-check-circle fa-4x feature-icon "></i>
+          <h3 class="feature-title">Easy to use.</h3>
+          <p class="feature-text">So easy to use, even your dog could do it.</p>
+        </div>
+
+        <div class='col-lg-4 feature-cell'>
+          <i class="fas fa-bullseye fa-4x feature-icon"></i>
+          <h3 class="feature-title">Elite Clientele</h3>
+          <p class="feature-text">We have all the dogs, the greatest dogs.</p>
+        </div>
+
+        <div class='col-lg-4 feature-cell'>
+          <i class="fas fa-heart fa-4x feature-icon"></i>
+          <h3 class="feature-title">Guaranteed to work.</h3>
+          <p class="feature-text">Find the love of your dog's life or your money back.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="white-section" id="footer">
+      <p>
+        <i class="footer-icon fab fa-twitter"></i>
+        <i class="footer-icon fab fa-facebook-f"></i>
+        <i class="footer-icon fab fa-instagram"></i>
+        <i class="footer-icon fas fa-envelope"></i>
+      </p>
+      <p class="copy-right">© Copyright 2019 Classmates</p>
+    </section>
+
+    <script src="{% static 'CDapp/js/students_view.js' %}" charset="utf-8"></script>
+    <script type="text/javascript" charset="utf-8">
+      window.onload = function() {      
+        
+        $.getJSON("{% static 'CDapp/data/cpositions.json' %}", function(data) {
+          console.log("website activated");
+          var context = {
+            r: 3,
+            "stroke": "white",
+            "stroke-width": 2,
+            "fill": "black",
+          }
+          for (var city_name in data) {
+            var city_x = data[city_name][0];
+            var city_y = data[city_name][1];
+            context = {
+              ...context,
+              "id": city_name,
+            }
+            createCircleInsideSVG(city_x, city_y, context);
+          }
+        })
+      };
+    </script>
+
+    <script>
+      $(document).ready(function() {
+        $('[data-toggle="popover"]').popover();
+      });
+      // function jump(){
+      //   window.location.href="";
+      // }
+</script>
+ 
+<input type="button" value="我是一个按钮" οnclick=javascrtpt:jump()>
+   </script>
+
+    <script type="text/javascript" charset="utf-8">
+      // $("path").hover(function(mouse) {
+      //   var province = mouse.target.attributes["title"].value;
+      //   var city = null;
+      //   var positions = null;
+
+      //   $.ajaxSettings.async = false;
+      //   $.getJSON("{% static 'CDapp/data/cprelations.json' %}", function(cp_data) {
+      //     city = cp_data[province];
+      //   })
+      //   $.getJSON("{% static 'CDapp/data/cpositions.json' %}", function(pos_data) {          
+      //     positions = pos_data[city];
+      //   })
+
+      //   var start_x = positions[0];
+      //   var start_y = positions[1];
+      //   displayStudentsList(start_x, start_y, start_x+200, start_y+150);
+      // })
+    </script>
+  </body>
+
+</html>
