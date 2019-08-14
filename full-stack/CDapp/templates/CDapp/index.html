@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  {% include 'CDapp/components/headers.html' %}
+  <body>
+    <section class="colored-section" id="head">
+      <section class="container-fluid">
+        <!-- Nav Bar -->
+        {% include 'CDapp/components/navbar.html' %}
+        <!-- title and example -->
+        <div class="row">
+          <div class="col-lg-6">
+            <h3 class="head-title">Keep in touch with your classmates</h3>
+          </div>
+
+          <div class="col-lg-6" id="status-div">
+            {% if user.is_authenticated %}
+              <a href="{% url 'CDapp:user' %}">Create new workpace</a>
+            {% else %}
+            <div class="jumbotron" id="signup-info">
+              <label id="username">Username</label>
+              <div class="input-group">   
+                  <input type="text" class="form-control" aria-describedby="basic-addon1">            
+              </div>
+              <label id="email">Email</label>
+              <div class="input-group"> 
+                  <input type="text" class="form-control" aria-describedby="basic-addon2">         
+              </div>
+              <label id="password">Password</label>
+              <div class="input-group"> 
+                  <input type="text" class="form-control" aria-describedby="basic-addon3">         
+              </div>
+              <br />
+              <button type="submit" class="btn btn-primary" id="signup">Sign up</button>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section class="white-section" id="map">
+    <h1 class="map-title">Customize your map with your favourite color</h1>
+    <div class="input-group mb-3 color-input">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Fill color</label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect01">
+            <option selected>Choose...</option>
+            <option value="red">Red</option>
+            <option value="blue">Blue</option>
+            <option value="white">White</option>
+            <option value="black">Black</option>
+        </select>
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Boarder color</label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect02">
+            <option selected>Choose...</option>
+            <option value="red">Red</option>
+            <option value="blue">Blue</option>
+            <option value="white">White</option>
+            <option value="black">Black</option>
+        </select>
+    </div>
+    <div class="map-svg">
+      {% include 'CDapp/svg-html/img-china.html' %}
+    </div>
+    </section>
+
+    <section class="colored-section" id="features">
+      <div class="row feature-box">
+
+        <div class='col-lg-4 feature-cell'>
+          <i class="fas fa-check-circle fa-4x feature-icon "></i>
+          <h3 class="feature-title">Easy to use.</h3>
+          <p class="feature-text">So easy to use, even your dog could do it.</p>
+        </div>
+
+        <div class='col-lg-4 feature-cell'>
+          <i class="fas fa-bullseye fa-4x feature-icon"></i>
+          <h3 class="feature-title">Elite Clientele</h3>
+          <p class="feature-text">We have all the dogs, the greatest dogs.</p>
+        </div>
+
+        <div class='col-lg-4 feature-cell'>
+          <i class="fas fa-heart fa-4x feature-icon"></i>
+          <h3 class="feature-title">Guaranteed to work.</h3>
+          <p class="feature-text">Find the love of your dog's life or your money back.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="white-section" id="footer">
+      <p class="footer-p">
+        <i class="footer-icon fab fa-twitter"></i>
+        <i class="footer-icon fab fa-facebook-f"></i>
+        <i class="footer-icon fab fa-instagram"></i>
+        <i class="footer-icon fas fa-envelope"></i>
+      </p>
+      <p class="copy-right">© Copyright 2019 Classmates</p>
+    </section>
+
+
+
+    <!-- <script src="js/index.js" charset="utf-8"></script> -->
+  </body>
+
+</html>

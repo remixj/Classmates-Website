@@ -1,0 +1,61 @@
+#main {
+    position: fixed;
+}
+
+#userinfo {
+    padding-top: 5%;
+    padding-bottom: 5%;
+
+}
+
+/* #input-space {
+    position: absolute;
+} */
+
+#username {
+    font-size: 1rem;
+    text-align: left;
+}
+
+#password {
+    font-size: 1rem;
+    text-align: left;
+}
+
+#fpassword {
+    text-align: right;
+    padding-right: 0%;
+}
+
+#login-title {
+    text-align: center;
+    font-size: 3rem;
+}
+
+#login {
+    width: 100%;
+}
+
+#note {
+    padding-top: 3%;
+    padding-bottom: 1%;
+}
+
+#note-info {
+    text-align: center;
+}
+
+.info-input1 {
+    padding : 5px 40%;
+    font-size: 1rem;
+}
+
+.form-label1 {
+    font-size: 1rem;
+    width: 100%;
+    text-align: center;
+}
+
+.form-label2{
+    font-size: 3rem;
+}

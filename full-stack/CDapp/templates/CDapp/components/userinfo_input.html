@@ -1,0 +1,9 @@
+{% load myfunc %}
+{% for field in form %}
+    <div class="input-group mb-3 info-input1">
+        <div class="input-group-prepend">
+            <span class="input-group-text" style="padding: 0 20px 0 20px">{{ field.label_tag }}</span>
+        </div>
+        {{ field|widget_with_classes:'form-control' }}
+    </div>
+{% endfor %}

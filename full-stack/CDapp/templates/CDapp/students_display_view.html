@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  {% include 'CDapp/components/headers.html' %}
+  <body>
+    <section class="colored-section" id="head">
+      <section class="container-fluid">
+        <!-- Nav Bar -->
+        {% include 'CDapp/components/navbar.html' %}
+      </section>
+    </section>
+
+    <section class="white-section" id="map">
+      <form method="POST" action="{% url 'CDapp:user-list' %}">
+        {% csrf_token %}
+        <div class="input-group mb-3 search-input">
+            <div class="input-group-prepend">
+                <span class="input-group-text">University:</span>
+            </div>
+            <input type="text" class="form-control" name="university">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Class Number:</span>
+            </div>
+            <input type="text" class="form-control" name="class-number">
+            <button type="submit" class="btn btn-primary" name="action-purpose" value="search">Search</button>
+        </div>
+      </form>
+      <p>
+        {{info}}
+      </p>
+
+      <div class="map-svg">
+        {% include 'CDapp/svg-html/img-china.html' %}
+      </div>
+    </section>
+
+    <section class="white-section" id="footer">
+      <p>
+        <i class="footer-icon fab fa-twitter"></i>
+        <i class="footer-icon fab fa-facebook-f"></i>
+        <i class="footer-icon fab fa-instagram"></i>
+        <i class="footer-icon fas fa-envelope"></i>
+      </p>
+      <p class="copy-right">© Copyright 2019 Classmates</p>
+    </section>
+
+    <script src="{% static 'CDapp/js/students_list_view.js' %}" charset="utf-8"></script>
+    <script type="text/javascript" charset="utf-8">
+      window.onload = function() {  
+        
+        var n = {{ info_length }};
+        var data = {{ info|safe }};
+        for(var counter=0; counter<n; counter++) {
+          person_info = data[counter];
+          name = person_info.fields["name"];
+          position = person_info.fields["position"].split(",");
+          province = person_info.fields["locating_province"];
+          // console.log(position)
+          create_popover_outside_svg(Number(position[0]), Number(position[1]), "Beijing");
+        }
+        
+        
+        $.getJSON("{% static 'CDapp/data/cpositions.json' %}", function(data) {
+          console.log("website activated");
+          var context = {
+            r: 3,
+            "stroke": "white",
+            "stroke-width": 2,
+            "fill": "black",
+          }
+          for (var city_name in data) {
+            var city_x = data[city_name][0];
+            var city_y = data[city_name][1];
+            context = {
+              ...context,
+              "id": city_name,
+            }
+            createCircleInsideSVG(city_x, city_y, context);
+          }
+        })
+      };
+    </script>
+    <script>
+      $(document).ready(function() {
+        $('[data-toggle="popover"]').popover();
+      });
+   </script>
+
+  </body>
+
+</html>
