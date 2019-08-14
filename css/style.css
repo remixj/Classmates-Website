@@ -130,6 +130,10 @@ i{
   border-radius: 100%;
 }
 
+.user-para{
+  margin-bottom: 5px;
+}
+
 path:hover{
   fill-opacity : 0.4;
 }

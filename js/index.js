@@ -151,7 +151,7 @@ function generate_information(display_arr, user_hashmap) {
       case "user_email":
         stack.push('div');
         stack.push('p');
-        popover_content += '<div><p>';
+        popover_content += '<div><p class="user-para">';
         popover_content += '<i class="fas fa-envelope" aria-hidden="true"></i>' + user_hashmap[user_item];
         popover_content += '</' + stack.pop() + '>';
         popover_content += '</' + stack.pop() + '>';
@@ -159,7 +159,7 @@ function generate_information(display_arr, user_hashmap) {
       case "user_tele":
         stack.push('div');
         stack.push('p');
-        popover_content += '<div><p>';
+        popover_content += '<div><p class="user-para">';
         popover_content += '<i class="fas fa-phone" aria-hidden="true"></i>' + user_hashmap[user_item];
         popover_content += '</' + stack.pop() + '>';
         popover_content += '</' + stack.pop() + '>';
@@ -167,7 +167,7 @@ function generate_information(display_arr, user_hashmap) {
       case "user_DoB":
         stack.push('div');
         stack.push('p');
-        popover_content += '<div><p>';
+        popover_content += '<div><p class="user-para">';
         popover_content += '<i class="fas fa-birthday-cake" aria-hidden="true"></i>' + user_hashmap[user_item];
         popover_content += '</' + stack.pop() + '>';
         popover_content += '</' + stack.pop() + '>';
@@ -175,7 +175,7 @@ function generate_information(display_arr, user_hashmap) {
       case "user_status":
         stack.push('div');
         stack.push('p');
-        popover_content += '<div><p>';
+        popover_content += '<div><p class="user-para">';
         if (user_hashmap[user_item] === true){
           popover_content += '<i class="fas fa-graduation-cap" aria-hidden="true"></i>';
         }
