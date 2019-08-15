@@ -1,28 +1,55 @@
 {% load static %}
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>Login</title>
-    </head>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    {% include 'CDapp/components/headers.html' %}
     <body>
-        <form method="POST" action="{% url 'CDapp:login' %}">
-            {% csrf_token %}
+        <section class="container-fluid" id="main">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <div>
+                        <p id="login-title">Sign in</p>
+                    </div>
+                    <form method="POST" action="{% url 'CDapp:login' %}">
+                        {% csrf_token %}
+                        <div class="jumbotron" id="userinfo">
+                            <div id="input-space">
+                                <label id="username">Username or email address</label>
+                                <div class="input-group">   
+                                    <input type="text" class="form-control" name="username" id="id_username" aria-describedby="basic-addon1">
+                                    <!-- <input type="text" name="username" autofocus="" required="" id="id_username"> -->
+                                    <!-- <p>{{ form.username }}</p> -->
+                                </div>
+    
+                                <div class="row">
+                                    <div class="col-md-6"><label id="password">Password</label></div>
+                                    <div class="col-md-6"><a href="#" id="fpassword">Forgot password?</a></div>
+                                </div>
+                                
+                                <div class="input-group"> 
+                                    <input type="password" class="form-control" name="password" id="id_password" aria-describedby="basic-addon2">     
+                                    <!-- <input type="password" name="password" required="" id="id_password"> -->
+                                    <!-- <p>{{ form.password }}</p>     -->
+                                </div>
+                                <br />
+                                <button type="submit" class="btn btn-primary" id="login" value="Login">Login</button>
+                            </div>
+                        </div>
+        
+                        <div class="jumbotron" id="note">
+                            <p id="note-info">
+                                New to the website? <a href="{% url 'CDapp:register' %}"> Create an account.</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
             
-            {% if form.errors %}
-                <p>There is something wrong with what you enters</p>
-            {% endif %}
+        </section>
+        
 
-            {% if next %}
-                <p>You can't access this page</p>
-            {% endif %}
-            
-            <p>Username: {{ form.username }}</p>
-            <p>password: {{ form.password }}</p>
-
-            <p><input type="submit" value="Login"></p>
-            <input type="hidden" name="next" value="{{ next }}">
-
-        </form>
-            
     </body>
+
 </html>
+

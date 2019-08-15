@@ -1,7 +1,7 @@
 // creat a hash set to restore the area the user just selected
 var selected_area_code = new Set();
 var count = 1;
-var last_choosing_position = "";
+// var last_choosing_position = "";
 var current_circle_id = 0;
 // fill color select
 $("#inputGroupSelect01").change(function(selection) {
@@ -48,8 +48,8 @@ $("path").click(function(click) {
   create_circle_outside_svg(mouse_x, mouse_y, current_circle_id);
 
   // $(".id_position").setAttribute("placehoder", String(mouse_x)+","+String(mouse_y));
-  $("#id_position").attr("value", String(mouse_x)+","+String(mouse_y));
-  last_choosing_position = String(mouse_x)+","+String(mouse_y);
+  $("#id_position").attr("value", String(Math.round(mouse_x-svg_x))+","+String(Math.round(mouse_y-svg_y)));
+  // last_choosing_position = String(mouse_x)+","+String(mouse_y);
 })
 
 var createCircleInsideSVG = function(x, y, context) {

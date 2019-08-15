@@ -12,12 +12,17 @@
     position: absolute;
 } */
 
-#username {
+#id_username {
     font-size: 1rem;
     text-align: left;
 }
 
-#password {
+#id_password1 {
+    font-size: 1rem;
+    text-align: left;
+}
+
+#id_password2 {
     font-size: 1rem;
     text-align: left;
 }

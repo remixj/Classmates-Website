@@ -25,9 +25,11 @@
             <button type="submit" class="btn btn-primary" name="action-purpose" value="search">Search</button>
         </div>
       </form>
-      <p>
-        {{info}}
-      </p>
+
+      <form method="POST" action="{% url 'CDapp:user' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary" name="pre_create_new_students">Add new students</button>
+      </form>
 
       <div class="map-svg">
         {% include 'CDapp/svg-html/img-china.html' %}
@@ -47,21 +49,11 @@
     <script src="{% static 'CDapp/js/students_list_view.js' %}" charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8">
       window.onload = function() {  
-        
-        var n = {{ info_length }};
-        var data = {{ info|safe }};
-        for(var counter=0; counter<n; counter++) {
-          person_info = data[counter];
-          name = person_info.fields["name"];
-          position = person_info.fields["position"].split(",");
-          province = person_info.fields["locating_province"];
-          // console.log(position)
-          create_popover_outside_svg(Number(position[0]), Number(position[1]), "Beijing");
-        }
-        
+
+        var svg_x = $("#china-map").offset().left;
+        var svg_y = $("#china-map").offset().top;
         
         $.getJSON("{% static 'CDapp/data/cpositions.json' %}", function(data) {
-          console.log("website activated");
           var context = {
             r: 3,
             "stroke": "white",
@@ -78,6 +70,19 @@
             createCircleInsideSVG(city_x, city_y, context);
           }
         })
+
+        if ({{has_info_flag}} == true) {
+          var n = {{ students_info_length }};
+          var data = {{ students_info|safe }};
+          for(var counter=0; counter<n; counter++) {
+            person_data = data[counter];
+            name = person_data["name"];
+            position = person_data["position"].split(",");
+            // province = person_data["locating_province"];
+            console.log(person_data);
+            create_popover_outside_svg(Number(position[0])+svg_x, Number(position[1])+svg_y, person_data);
+          }
+        }
       };
     </script>
     <script>

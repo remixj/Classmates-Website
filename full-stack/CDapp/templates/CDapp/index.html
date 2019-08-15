@@ -15,24 +15,42 @@
 
           <div class="col-lg-6" id="status-div">
             {% if user.is_authenticated %}
-              <a href="{% url 'CDapp:user' %}">Create new workpace</a>
+              <form method="POST" action="{% url 'CDapp:user' %}">
+                {% csrf_token %}
+                <div class="jumbotron" id="operation-info">
+                    <button type="submit" class="btn btn-primary" name="pre_create_new_classes" value="pre_create_new_classes" style="font-size: 1.5rem;">Create new class</button>
+                </div>
+              </form>
+              <form method="POST" action="{% url 'CDapp:user-list' %}">
+                {% csrf_token %}
+                <div class="jumbotron" id="operation-info">
+                    <button type="submit" class="btn btn-primary" name="search_page" value="search_page" style="font-size: 1.5rem;">Search for class</button>
+                </div>
+              </form>
             {% else %}
-            <div class="jumbotron" id="signup-info">
-              <label id="username">Username</label>
-              <div class="input-group">   
-                  <input type="text" class="form-control" aria-describedby="basic-addon1">            
-              </div>
-              <label id="email">Email</label>
-              <div class="input-group"> 
-                  <input type="text" class="form-control" aria-describedby="basic-addon2">         
-              </div>
-              <label id="password">Password</label>
-              <div class="input-group"> 
-                  <input type="text" class="form-control" aria-describedby="basic-addon3">         
-              </div>
-              <br />
-              <button type="submit" class="btn btn-primary" id="signup">Sign up</button>
-            </div>
+              <form method="POST" action="{% url 'CDapp:register' %}">
+                {% csrf_token %}
+                <div class="jumbotron" id="signup-info">
+                  <label id="id_username">Username</label>
+                  <div class="input-group">   
+                      <input type="text" class="form-control" name="username" id="id_username" aria-describedby="basic-addon1">        
+                      <!-- <input type="text" name="username" maxlength="150" autofocus="" required="" id="id_username">     -->
+                  </div>
+                  <label id="id_password1">Password</label>
+                  <div class="input-group"> 
+                      <input type="password" class="form-control" name="password1" id="id_password1" aria-describedby="basic-addon2">      
+                      <!-- <input type="password" name="password1" required="" id="id_password1">    -->
+                  </div>
+                  <label id="id_password2">Password confirmation</label>
+                  <div class="input-group"> 
+                      <input type="password" class="form-control" name="password2" id="id_password2" aria-describedby="basic-addon3">   
+                      <!-- <input type="password" name="password2" required="" id="id_password2">       -->
+                  </div>
+                  <br />
+                  <button type="submit" class="btn btn-primary" id="signup" value="Register">Sign up</button>
+                  <!-- <input type="submit" value="Register"> -->
+                </div>
+              </form>
             {% endif %}
           </div>
         </div>
@@ -101,8 +119,6 @@
       </p>
       <p class="copy-right">© Copyright 2019 Classmates</p>
     </section>
-
-
 
     <!-- <script src="js/index.js" charset="utf-8"></script> -->
   </body>
