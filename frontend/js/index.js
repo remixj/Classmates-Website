@@ -1,18 +1,8 @@
-//                                                    670 0
-//               261 80                                         870 106
-//                                  528 200
-//         80 264                                          720 264
-//
-//                420 517
-//                                                        710 502
-//
-//                                544 569
-//
-//  under the width of 955
-function Location(x,y){
-  this.x = Number(x);
-  this.y = Number(y);
-}
+ /* jshint esversion: 6 */
+ function Location(x,y){
+   this.x = Number(x);
+   this.y = Number(y);
+ }
 
 var panZoomTiger = svgPanZoom('#china-map',{
   controlIconsEnabled: true,
@@ -69,15 +59,9 @@ $("path").click(function(click) {
   var CN_code = click.target.id;
   $("#" + CN_code).addClass("selected");
   var CN_area = $("#" + CN_code).attr("title");
-  console.log("mouse_x : ",mouse_x,"mouse_y : " , mouse_y);
-  console.log($("#standard_1").offset().left,$("#standard_1").offset().top);
-  // console.log("svg_x : " , svg_x , "svg_y : " ,  svg_y);
   var mouse_origin = transform_location(new Location(mouse_x,mouse_y));
   // this functino only works using the default zoom rate 1
-  // console.log(mouse_origin);
   create_circle_inside_svg(mouse_origin.x , mouse_origin.y , CN_area);
-
-  // create_circle_inside_svg(mouse_x - svg_x, mouse_y - svg_y, CN_area);
   // update the hash set
   if (selected_area_code.has(CN_code)) {
     selected_area_code.delete(CN_code);
@@ -92,13 +76,8 @@ function transform_location(mouse_offset){
     standard_1_origin = new Location($("#standard_1").attr("cx"),$("#standard_1").attr("cy")),
     standard_2_origin = new Location($("#standard_2").attr("cx"),$("#standard_2").attr("cy"));
   var delta_x = (mouse_offset.x - standard_2_offset.x) * (standard_1_origin.x - standard_2_origin.x) / (standard_1_offset.x - standard_2_offset.x);
-  // console.log((mouse_offset.x - standard_2_offset.x) , (standard_2_origin.x - standard_1_origin.x) , (standard_2_offset.x - standard_1_offset.x) , delta_x);
   var delta_y = delta_x * (mouse_offset.y - standard_2_offset.y) / (mouse_offset.x - standard_2_offset.x);
-  // console.log(delta_x , (mouse_offset.x - standard_2_offset.x) , (mouse_offset.x - standard_2_offset.x) , delta_y);
-
   var new_position = new Location(standard_2_origin.x + delta_x , standard_2_origin.y + delta_y);
-  // console.log(typeof($("#standard_2").attr("cx")) ,$("#standard_2").attr("cy"),delta_x , delta_y);
-  console.log(new_position);
   return new_position;
 }
 
@@ -111,6 +90,20 @@ function create_circle_outside_svg(x, y) {
 function specify_popover_information(CN_area) {
 
 }
+
+function crearte_city_circle_inside(x,y,color="grey",city_name){
+  var circle = makeSVG('circle', {
+    cx: Number(x),
+    cy: Number(y),
+    r: 3,
+    stroke: color,
+    'stroke-width': 0,
+    fill: color
+  });
+  circle.setAttribute("id","CN-" + city_name);
+  $("#china-map").children()[0].appendChild(circle);
+}
+
 // create a circle inside svg
 function create_circle_inside_svg(starting_x, starting_y,CN_area) {
   var user_id = 'user_' + String(count);
