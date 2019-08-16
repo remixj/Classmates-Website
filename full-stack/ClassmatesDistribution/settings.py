@@ -127,6 +127,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static/')
 
 # Login/Logout redirect
 
-LOGIN_REDIRECT_URL = '/user'
+LOGIN_REDIRECT_URL = '/'
 
-LOGOUT_REDIRECT_URL = ''
+LOGOUT_REDIRECT_URL = '/'

@@ -159,3 +159,8 @@ path:hover{
   padding: 0% 20%;
   font-weight: bold;
 }
+
+#operation-info {
+  text-align: center;
+  padding: 10% 5% 5% 10%;
+}

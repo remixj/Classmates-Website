@@ -11,35 +11,36 @@
     </section>
 
     <section class="white-section" id="map">
-      {% if user.is_authenticated %}
-        <p>Welcome, {{ user.username }}</p>
-        <form method="POST" action="{% url 'CDapp:user' %}" enctype="multipart/form-data" class="form-vertical">
-          {% csrf_token %}
-          {% if not formed_flag %}
-            <div>
-              <button type="submit" class="btn btn-primary" name="create" value="create new class">Create new class</button>
-              <button type="submit" class="btn btn-primary" name="load" value="load class info">Load class info</button>
-            </div>
-          {% else %}
-            {% if form_type == "load" %}
-              <div>
-                {% include 'CDapp/components/userinfo_input.html' %}
-                <p>Note: Choosing a position by clicking the map below</p> 
-                <button type="submit" class="btn btn-primary" name="data_add">Add</button>
-                <!-- <input type="button" lass="btn btn-primary" value="Complete" οnclick=javascrtpt:jump() /> -->
+      <p>Welcome, {{ user.username }}</p>
+      <form method="POST" action="{% url 'CDapp:user' %}" enctype="multipart/form-data" class="form-vertical">
+        {% csrf_token %}
+          <!-- <div>
+            <button type="submit" class="btn btn-primary" name="create" value="create new class">Create new class</button>
+            <button type="submit" class="btn btn-primary" name="load" value="load class info">Load class info</button>
+          </div> -->
+          {% load myfunc %}
+          {% for field in form %}
+              <div class="input-group mb-3 info-input1">
+                  <div class="input-group-prepend">
+                      <span class="input-group-text" style="padding: 0 20px 0 20px">{{ field.label_tag }}</span>
+                  </div>
+                  {{ field|widget_with_classes:'form-control' }}
               </div>
-            {% else %}
-              {{ form.as_p }}
-              <button type="submit" class="btn btn-primary" name="data_create">Create</button>
-            {% endif %}
+          {% endfor %}
+          {% if form_type == "create_new_students" %}
+            <p>Note: Choosing a position by clicking the map below</p> 
+            <button type="submit" class="btn btn-primary" name="create_a_student">Add</button>
+            <a class="btn btn-primary" href="{% url 'CDapp:user-list' %}">Complete</a>
+          {% else %}
+            <button type="submit" class="btn btn-primary" name="create_a_class">Create</button>
           {% endif %}
-        </form>
-      {% endif %}
+      </form>
         
       <div class="map-svg">
         {% include 'CDapp/svg-html/img-china.html' %}
       </div>
     </section>
+    
 
     <section class="colored-section" id="features">
       <div class="row feature-box">
@@ -102,9 +103,9 @@
       $(document).ready(function() {
         $('[data-toggle="popover"]').popover();
       });
-      // function jump(){
-      //   window.location.href="";
-      // }
+      function jump(){
+        window.location.href="{% url 'CDapp:user-list' %}";
+      }
 </script>
  
 <input type="button" value="我是一个按钮" οnclick=javascrtpt:jump()>
