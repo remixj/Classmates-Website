@@ -112,6 +112,10 @@ four colors for this website.
   position: absolute;
 }
 
+/* .popover-body{
+  width:224px;
+} */
+
 i{
   padding: 1px 8px 1px 10px;
 }

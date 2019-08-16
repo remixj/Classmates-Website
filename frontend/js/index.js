@@ -9,7 +9,27 @@
 //                                544 569
 //
 //  under the width of 955
+function Location(x,y){
+  this.x = Number(x);
+  this.y = Number(y);
+}
 
+var panZoomTiger = svgPanZoom('#china-map',{
+  controlIconsEnabled: true,
+  dblClickZoomEnabled: false,
+  beforeZoom : hide_all_popover,
+  // onZoom : show_all_popover,
+  beforePan : hide_all_popover,
+  // onPan : show_all_popover
+  });
+
+function hide_all_popover (){
+    $("circle").popover('hide');
+  }
+
+function show_all_popover(){
+  $("circle").popover('show');
+}
 // creat a hash set to restore the area the user just selected
 var selected_area_code = new Set();
 var count = 1;
@@ -47,13 +67,17 @@ $("path").click(function(click) {
   var mouse_x = click.pageX,
     mouse_y = click.pageY;
   var CN_code = click.target.id;
-  $("#" + CN_code).toggleClass("selected");
+  $("#" + CN_code).addClass("selected");
   var CN_area = $("#" + CN_code).attr("title");
-  console.log(CN_area);
-  // create_circle_outside_svg(mouse_x - div_x, mouse_y - div_y);
-  create_popover_outside_svg(mouse_x - div_x, mouse_y - div_y, CN_area);
-  // create_line_inside_svg(mouse_x - svg_x, mouse_y - svg_y);
-  // create_circle_inside_svg(mouse_x - svg_x, mouse_y - svg_y);
+  console.log("mouse_x : ",mouse_x,"mouse_y : " , mouse_y);
+  console.log($("#standard_1").offset().left,$("#standard_1").offset().top);
+  // console.log("svg_x : " , svg_x , "svg_y : " ,  svg_y);
+  var mouse_origin = transform_location(new Location(mouse_x,mouse_y));
+  // this functino only works using the default zoom rate 1
+  // console.log(mouse_origin);
+  create_circle_inside_svg(mouse_origin.x , mouse_origin.y , CN_area);
+
+  // create_circle_inside_svg(mouse_x - svg_x, mouse_y - svg_y, CN_area);
   // update the hash set
   if (selected_area_code.has(CN_code)) {
     selected_area_code.delete(CN_code);
@@ -62,21 +86,61 @@ $("path").click(function(click) {
   }
 });
 
+function transform_location(mouse_offset){
+  var standard_1_offset = new Location($("#standard_1").offset().left,$("#standard_1").offset().top) ,
+    standard_2_offset = new Location($("#standard_2").offset().left,$("#standard_2").offset().top) ,
+    standard_1_origin = new Location($("#standard_1").attr("cx"),$("#standard_1").attr("cy")),
+    standard_2_origin = new Location($("#standard_2").attr("cx"),$("#standard_2").attr("cy"));
+  var delta_x = (mouse_offset.x - standard_2_offset.x) * (standard_1_origin.x - standard_2_origin.x) / (standard_1_offset.x - standard_2_offset.x);
+  // console.log((mouse_offset.x - standard_2_offset.x) , (standard_2_origin.x - standard_1_origin.x) , (standard_2_offset.x - standard_1_offset.x) , delta_x);
+  var delta_y = delta_x * (mouse_offset.y - standard_2_offset.y) / (mouse_offset.x - standard_2_offset.x);
+  // console.log(delta_x , (mouse_offset.x - standard_2_offset.x) , (mouse_offset.x - standard_2_offset.x) , delta_y);
+
+  var new_position = new Location(standard_2_origin.x + delta_x , standard_2_origin.y + delta_y);
+  // console.log(typeof($("#standard_2").attr("cx")) ,$("#standard_2").attr("cy"),delta_x , delta_y);
+  console.log(new_position);
+  return new_position;
+}
+
 function create_circle_outside_svg(x, y) {
   var circle_code = '<div class="circle-base" style="left : ' + x + 'px; top : ' + y + 'px; "></div>';
   $(".map-svg").prepend(circle_code);
 }
 
 // generate popover outside svg in the map-svg div tag
-function create_popover_outside_svg(x, y, CN_area) {
-  var user_id = 'user_' + String(count);
-  var code = generate_popover_code(x, y, user_id, CN_area);
+function specify_popover_information(CN_area) {
 
-  $(".map-svg").prepend(code);
+}
+// create a circle inside svg
+function create_circle_inside_svg(starting_x, starting_y,CN_area) {
+  var user_id = 'user_' + String(count);
+  // make circle element
+  var circle = makeSVG('circle', {
+    cx: Number(starting_x),
+    cy: Number(starting_y),
+    r: 4,
+    stroke: 'white',
+    'stroke-width': 0,
+    fill: 'white'
+  });
+  // initial circle element
+  circle.setAttribute("role","button");
+  circle.setAttribute("id",user_id);
+  circle.setAttribute("data-html","true");
+  circle.setAttribute("data-toggle","popover");
+  circle.setAttribute("data-placement","top");
+  circle.setAttribute("data-container",".map-svg");
+  circle.setAttribute("data-title",CN_area);
+  // add circle element inside svg element
+  $("#china-map").children()[0].appendChild(circle);
+  $(document).ready(function() {
+    $('[data-toggle="popover"]').popover();
+  });
   // to make sure every pop over tag could be generate popover correctly
   $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
   });
+
   // we should get user informaion from database and it should contain the basic information like that
   var user_hashmap = {
     user_hash_id: "asfsfasf", // should be a unique id for a user
@@ -89,6 +153,8 @@ function create_popover_outside_svg(x, y, CN_area) {
     user_status: false, // true -> student false -> employed
     user_subordin: "Beijing University of Posts and Telecommunications"
   };
+
+  // choose what to display and what not to
   var display_info = ["user_img", "user_name", "user_gender", "user_email", "user_tele", "user_DoB", "user_status", "user_subordin"];
   var display_opt =  [   true   ,     true   ,     true     ,     true    ,     true   ,    false  ,       true   ,      true      ];
   var display_arr = [];
@@ -96,12 +162,16 @@ function create_popover_outside_svg(x, y, CN_area) {
     if (display_opt[i])
       display_arr.push(display_info[i]);
   }
-  $("#" + user_id).attr("data-content", generate_information(display_arr, user_hashmap));
-  // $("#" + user_id).attr("data-content", "<em>Hello</em> world<img class='classmate-img' src='img/" + user_id + ".jpg'>");
+  // add popover content with code we just generated
+  $("#" + user_id).attr("data-content", generate_popover_content(display_arr, user_hashmap));
+  // set the popover default show
+  $("#"+user_id).popover('show');
+  // that is just bull shit for test
   count++;
 }
 
-function generate_information(display_arr, user_hashmap) {
+// generate code for popover content
+function generate_popover_content(display_arr, user_hashmap) {
   /*
   <div class="popover-body">
       <div>
@@ -193,30 +263,6 @@ function generate_information(display_arr, user_hashmap) {
     }
   }
   return popover_content;
-}
-
-// generate popover code
-function generate_popover_code(x, y, user_id, CN_area) {
-  // popover title should contain information like position may be the province the user submitted
-  var popover_title = 'popover - title';
-  // the most important thing is to define the structure of popover content html
-  var img_path = "img/" + user_id + ".jpg";
-
-  // and we add the popover code into the map
-  return '<a role="button" id="' + user_id + '" data-html = "true" class="circle-base" style="left : ' + x + 'px ; top : ' + y + 'px; " data-toggle="popover" data-placement="top" data-container=".map-svg" data-title="' + CN_area + '" ></div>';
-}
-
-// create a circle inside svg
-function create_circle_inside_svg(starting_x, starting_y) {
-  var circle = makeSVG('circle', {
-    cx: Number(starting_x),
-    cy: Number(starting_y),
-    r: 4,
-    stroke: 'white',
-    'stroke-width': 2,
-    fill: 'red'
-  });
-  document.getElementById('china-map').appendChild(circle);
 }
 
 // create a line inside svg
