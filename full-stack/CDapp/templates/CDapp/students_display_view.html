@@ -49,25 +49,32 @@
     <script src="{% static 'CDapp/js/students_list_view.js' %}" charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8">
       window.onload = function() {  
+        var context = {
+          "cx": 543.1475830078125, 
+          "cy": 246.71875,
+          "r": 0,
+          "id": "standard_1",
+          "stroke": "white", 
+          "stroke-width": "0",
+          "fill": "white",
+        }
+        var circle_1 = makeSVG('circle', context);
+        $("#china-map").children()[0].appendChild(circle_1);
+
+        context["cx"] = 76.1475830078125;
+        context["cy"] = 385.71875;
+        context["id"] = "standard_2";
+        var circle_2 = makeSVG('circle', context);
+        $("#china-map").children()[0].appendChild(circle_2);
 
         var svg_x = $("#china-map").offset().left;
         var svg_y = $("#china-map").offset().top;
         
         $.getJSON("{% static 'CDapp/data/cpositions.json' %}", function(data) {
-          var context = {
-            r: 3,
-            "stroke": "white",
-            "stroke-width": 2,
-            "fill": "black",
-          }
           for (var city_name in data) {
             var city_x = data[city_name][0];
             var city_y = data[city_name][1];
-            context = {
-              ...context,
-              "id": city_name,
-            }
-            createCircleInsideSVG(city_x, city_y, context);
+            markCityInsideSVG(city_x, city_y, city_name);
           }
         })
 
@@ -79,10 +86,12 @@
             name = person_data["name"];
             position = person_data["position"].split(",");
             // province = person_data["locating_province"];
+            createPopoverInsideSVG(Number(position[0])+svg_x, Number(position[1])+svg_y, person_data);
             console.log(person_data);
-            create_popover_outside_svg(Number(position[0])+svg_x, Number(position[1])+svg_y, person_data);
           }
         }
+
+        show_all_popover();
       };
     </script>
     <script>

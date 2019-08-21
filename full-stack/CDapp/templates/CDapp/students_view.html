@@ -76,7 +76,24 @@
 
     <script src="{% static 'CDapp/js/students_view.js' %}" charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8">
-      window.onload = function() {      
+      window.onload = function() {
+        var context = {
+          cx: 543.1475830078125, 
+          cy: 246.71875,
+          r: 0,
+          "id": "standard_1",
+          "stroke": "white", 
+          "stroke-width": "0",
+          "fill": "white",
+        }
+        var circle_1 = makeSVG('circle', context);
+        $("#china-map").children()[0].appendChild(circle_1);
+
+        context["cx"] = 76.1475830078125;
+        context["cy"] = 385.71875;
+        context["id"] = "standard_2";
+        var circle_2 = makeSVG('circle', context);
+        $("#china-map").children()[0].appendChild(circle_2);
         
         $.getJSON("{% static 'CDapp/data/cpositions.json' %}", function(data) {
           console.log("website activated");
@@ -93,7 +110,7 @@
               ...context,
               "id": city_name,
             }
-            createCircleInsideSVG(city_x, city_y, context);
+            markCityInsideSVG(city_x, city_y, context);
           }
         })
       };

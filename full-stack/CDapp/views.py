@@ -5,6 +5,9 @@ from django.contrib.auth import authenticate, login
 from django.core import serializers
 from .models import Person, Province, Class
 
+from django.conf import settings
+from django.conf.urls.static import static, serve
+
 import json
 
 def index(request):
@@ -25,8 +28,11 @@ def usersView(request):
         # elif "data_add" in data_dict:
         elif "create_a_student" in data_dict:
             # create student "create_student"
-            form = createStudentForm(request.POST)
+            form = createStudentForm(request.POST, request.FILES)
             if form.is_valid():
+                # print(form.cleaned_data)
+                # form.avatar_url = form.cleaned_data["avatar"].url
+                # print(form.avatar.url)
                 form.save()
                 form = createStudentForm()
                 form_type = "create_new_students"
@@ -75,7 +81,8 @@ def registerView(request):
 
 def usersDetailView(request, class_num=None):
     students_info = Person.objects.filter(graduation_class__class_number=class_num).values("id", 
-                                                                                            "name", 
+                                                                                            "name",
+                                                                                            "avatar", 
                                                                                             "email",
                                                                                             "phone", 
                                                                                             "locating_province", 
@@ -93,26 +100,28 @@ def usersDetailView(request, class_num=None):
     # locating_city      = models.CharField(max_length=10, blank=True, null=True)
     # position           = models.CharField(max_length=10,default="")
     # work_or_study      = models.CharField(max_length=10, choices=WS_STATUS, blank=True, null=True)
+    # print(students_info)
 
-    students_data   = students_info
-    provinces_data  = province_info
-    class_data      = class_info
-
-    for info_iter in students_data:
+    for info_iter in students_info:
         sp_pk = info_iter["locating_province"]
-        info_iter["locating_province"] = provinces_data[sp_pk-1]["name"]
+        for province_iter in province_info:
+            if province_iter["id"] == sp_pk:
+                info_iter["locating_province"] = province_iter["name"]
 
-    for info_iter in students_data:
         sp_pk = info_iter["graduation_class"]
-        info_iter["graduation_class"] = class_data[sp_pk-1]["university"]+"-"+str(class_data[sp_pk-1]["class_number"])
-    
-    
+        for class_iter in class_info:
+            if class_iter["id"] == sp_pk:
+                info_iter["graduation_class"] = class_iter["university"]+"-"+str(class_iter["class_number"])
+
+        info_iter["avatar"] = "http://localhost:8000"+settings.MEDIA_URL+info_iter["avatar"]
+        print(info_iter["avatar"])
+
     context = {
         # "students_info": serializers.serialize("json", students_info),
         # "students_info_length": len(students_info),
         # "provinces_info": serializers.serialize("json", province_info),
-        "students_info": json.dumps(list(students_data)),
-        "students_info_length": len(list(students_data)),
+        "students_info": json.dumps(list(students_info)),
+        "students_info_length": len(list(students_info)),
         "has_info_flag": "true",
     }
 

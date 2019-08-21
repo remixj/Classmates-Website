@@ -14,20 +14,24 @@ class createStudentForm(forms.ModelForm):
     class Meta:
         model = Person
         fields = [
-            'name',
-            'email',
-            'phone',
-            'graduation_class',
-            'locating_province',
-            'locating_city',
-            'work_or_study',
-            'position'
+            "name",
+            "avatar",
+            "sex",
+            "email",
+            "phone",
+            "graduation_class",
+            "locating_province",
+            "locating_province",
+            "locating_city",
+            "work_or_study",
+            "position"
         ]
         widgets = {
             'name': forms.TextInput(attrs={"class": "form-control"}),
             'email': forms.EmailInput(attrs={"class": "form-control"}),
             'position': forms.TextInput(attrs={"readonly": "true"}),
         }
+
 
 class searchForm(forms.Form):
     university = forms.CharField(max_length=10)

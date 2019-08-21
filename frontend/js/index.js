@@ -61,6 +61,7 @@ $("path").click(function(click) {
   var CN_area = $("#" + CN_code).attr("title");
   var mouse_origin = transform_location(new Location(mouse_x,mouse_y));
   // this functino only works using the default zoom rate 1
+  // console.log(mouse_x, mouse_y);
   create_circle_inside_svg(mouse_origin.x , mouse_origin.y , CN_area);
   // update the hash set
   if (selected_area_code.has(CN_code)) {
@@ -75,6 +76,9 @@ function transform_location(mouse_offset){
     standard_2_offset = new Location($("#standard_2").offset().left,$("#standard_2").offset().top) ,
     standard_1_origin = new Location($("#standard_1").attr("cx"),$("#standard_1").attr("cy")),
     standard_2_origin = new Location($("#standard_2").attr("cx"),$("#standard_2").attr("cy"));
+  console.log($("#standard_2").offset());
+  console.log("standard_1_offset: ", standard_1_offset.x, standard_1_offset.y);
+  console.log("standard_1_origin: ", standard_1_origin.x, standard_1_origin.y);
   var delta_x = (mouse_offset.x - standard_2_offset.x) * (standard_1_origin.x - standard_2_origin.x) / (standard_1_offset.x - standard_2_offset.x);
   var delta_y = delta_x * (mouse_offset.y - standard_2_offset.y) / (mouse_offset.x - standard_2_offset.x);
   var new_position = new Location(standard_2_origin.x + delta_x , standard_2_origin.y + delta_y);

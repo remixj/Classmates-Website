@@ -164,3 +164,9 @@ path:hover{
   text-align: center;
   padding: 10% 5% 5% 10%;
 }
+
+.classmate-img{
+  width: 50%;
+  margin: 10px;
+  border-radius: 100%;
+}
